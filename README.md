@@ -5,10 +5,10 @@ Basic   | Spec Sheet
 -------:|:-------------------------
 CPU     | 1.3GHz Quad-Core MT6582M
 GPU     | Mali-400MP
-Memory  | 1GB RAM
+Memory  | 2GB RAM
 Shipped Android Version | 4.4.2
-Storage | 4GB
-Battery | 1600 mAh
+Storage | 8GB
+Battery | 2300 mAh
 Display | 4" 800 x 480 px
 Camera  | 5MPx
 

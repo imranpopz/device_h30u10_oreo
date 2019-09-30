@@ -105,18 +105,16 @@ TARGET_HAS_EARLYSUSPEND := true
 SIM_COUNT := 2
 
 # RIL
-BOARD_RIL_CLASS := ../../../$(LOCAL_PATH)/ril/
+BOARD_RIL_CLASS := $(LOCAL_PATH)/ril/
 
 TARGET_USERIMAGES_USE_EXT4:=true
 USE_CAMERA_STUB := true
-
-# Symbols
-TARGET_LDPRELOAD += libshim.so
-TARGET_LDPRELOAD += libxlog.so
 
 # SELinux
 #BOARD_SEPOLICY_DIRS += \
 #    device/huawei/h30u10/sepolicy
 
+# Symbols
+LINKER_FORCED_SHIM_LIBS := /system/lib/libshim.so
 # Hack for build
 $(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
