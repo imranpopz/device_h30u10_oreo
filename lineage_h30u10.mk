@@ -206,7 +206,8 @@ PRODUCT_PACKAGES += \
     libcurl
 
 PRODUCT_PACKAGES += \
-    libshim
+    libshim \
+    libxlog
    
 # Vendor Interface Manifest
 PRODUCT_COPY_FILES += \
