@@ -104,8 +104,6 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
     android.hardware.audio.effect@2.0-impl
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.ril_class=SproutRIL
 
 # Bluetooth
 PRODUCT_PACKAGES += \
