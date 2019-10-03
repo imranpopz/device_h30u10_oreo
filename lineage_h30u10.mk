@@ -105,7 +105,7 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.effect@2.0-impl
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.telephony.ril_class=MediaTekRIL
+    ro.telephony.ril_class=SproutRIL
 
 # Bluetooth
 PRODUCT_PACKAGES += \
@@ -230,11 +230,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES := \
 	dalvik.vm.image-dex2oat-Xms=64m \
 	dalvik.vm.image-dex2oat-Xmx=64m \
 	ro.dalvik.vm.native.bridge=0 \
-		camera.disable_zsl_mode=1
-	ro.hardware=h30u10 \
-	ro.telephony.ril_class=MediaTekRIL \
-	ro.telephony.ril.config=fakeiccid
-
+	camera.disable_zsl_mode=1
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     pm.dexopt.first-boot=verify-at-runtime \
