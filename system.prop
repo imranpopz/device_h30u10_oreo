@@ -1,10 +1,11 @@
 #
 # system.prop for h30u10
 #
+ro.hardware=h30u10
 # RIL			  
 rild.libpath=/system/lib/mtk-ril.so
 rild.libargs=-d /dev/ttyC0
-
+ro.telephony.ril.config=fakeiccid
 
 # MTK, Infinity, 20090720 {
 wifi.interface=wlan0
