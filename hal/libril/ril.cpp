@@ -436,7 +436,7 @@ int isInitialAttachAPN(const char *requestedApn, const char * protocol,
 		int authType, const char *username, const char* password, RILChannelCtx *pChannel)
 {
     char iaProperty[PROPERTY_VALUE_MAX * 2] = { 0 };
-    getIaCache(iaProperty);
+//    getIaCache(iaProperty);
     RLOGD("[RILData_GSM_IRAT]: isInitialAttachApn IaCache=%s", iaProperty);
     if (strlen(iaProperty) == 0) {
 	// No initial attach APN, return false.
