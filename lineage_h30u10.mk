@@ -95,6 +95,7 @@ PRODUCT_COPY_FILES += \
     device/huawei/h30u10/rootdir/root/init.h30u10.usb.rc:root/init.h30u10.usb.rc \
     device/huawei/h30u10/rootdir/root/init.h30u10.rc:root/init.h30u10.rc 
 
+
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
@@ -202,10 +203,16 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libcurl
 
+# Ril
+PRODUCT_PACKAGES += \
+	android.hardware.radio@1.0 \
+	android.hardware.radio@1.1 \
+	android.hardware.radio.deprecated@1.0
+
 PRODUCT_PACKAGES += \
     libshim \
-    libxlog
-   
+    libshim_ril
+
 # Vendor Interface Manifest
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/manifest.xml:system/vendor/manifest.xml
@@ -214,10 +221,9 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES := \
 	ro.crypto.state=unencrypted \
 	ro.mount.fs=EXT4 \
 	ro.secure=0 \
-	ro.adb.secure=0 \
 	ro.allow.mock.location=1 \
 	ro.debuggable=1 \
-	persist.sys.usb.config = mtp,adb \
+	persist.sys.usb.config = adb \
 	persist.service.adb.enable=1 \
 	persist.service.debuggable=1 \
 	ro.zygote=zygote32 \

@@ -62,9 +62,8 @@ USE_OPENGL_RENDERER:= true
 
 # RIL
 SIM_COUNT := 2
-BOARD_PROVIDES_RILD := true
-BOARD_PROVIDES_LIBRIL := true
 BOARD_CONNECTIVITY_MODULE := conn_soc
+
 # WiFi
 BOARD_WLAN_DEVICE := MediaTek
 WPA_SUPPLICANT_VERSION := VER_0_8_X
@@ -93,7 +92,7 @@ MALLOC_SVELTE := true
 BOARD_USES_MTK_HARDWARE := true
 BOARD_HAS_MTK_HARDWARE := true
 MTK_HARDWARE := true
-TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
+
 
 # FRAMEWORK WITH OUT SYNC
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
@@ -115,7 +114,6 @@ USE_CAMERA_STUB := true
 #BOARD_SEPOLICY_DIRS += \
 #    device/huawei/h30u10/sepolicy
 
-# Symbols
-LINKER_FORCED_SHIM_LIBS := /system/lib/libshim.so
+
 # Hack for build
 $(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
