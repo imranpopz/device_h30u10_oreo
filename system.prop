@@ -26,8 +26,8 @@ mediatek.wlan.ctia=0
 #
 wifi.tethering.interface=ap0
 #
-ro.sf.lcd_density=240
-persist.sys.lcd_density=240
+ro.sf.lcd_density=320
+persist.sys.lcd_density=320
 
 # OpenGLES
 ro.opengles.version=131072

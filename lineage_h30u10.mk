@@ -213,6 +213,17 @@ PRODUCT_PACKAGES += \
     libshim \
     libshim_ril
 
+# Camera
+PRODUCT_PACKAGES += \
+	Camera2 \
+	Snap \
+	camera.device@1.0-impl \
+    	camera.device@3.2-impl \
+	android.hardware.camera.provider@2.4-impl \
+    	android.hardware.camera.provider@2.4-service \
+        libcamera_parameters_mtk	
+
+
 # Vendor Interface Manifest
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/manifest.xml:system/vendor/manifest.xml
