@@ -210,8 +210,7 @@ PRODUCT_PACKAGES += \
 	android.hardware.radio.deprecated@1.0
 
 PRODUCT_PACKAGES += \
-    libshim \
-    libshim_ril
+    libshim
 
 # Camera
 PRODUCT_PACKAGES += \
@@ -221,7 +220,7 @@ PRODUCT_PACKAGES += \
     	camera.device@3.2-impl \
 	android.hardware.camera.provider@2.4-impl \
     	android.hardware.camera.provider@2.4-service \
-        libcamera_parameters_mtk	
+        libcamera_parameters_mtk
 
 
 # Vendor Interface Manifest
