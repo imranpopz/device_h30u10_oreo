@@ -1,7 +1,7 @@
 #
 # system.prop for h30u10
 #
-ro.hardware=h30u10
+				  
 # RIL			  
 rild.libpath=/system/lib/mtk-ril.so
 rild.libargs=-d /dev/ttyC0

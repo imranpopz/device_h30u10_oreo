@@ -1,3 +1,2 @@
 PRODUCT_MAKEFILES := \
-	$(LOCAL_DIR)/lineage.mk \
-	$(LOCAL_DIR)/lineage_h30u10.mk
+     $(LOCAL_DIR)/device.mk

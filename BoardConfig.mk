@@ -30,7 +30,7 @@ MTK_PLATFORM := mt6582
 MTK_PROJECT := h30u10
 TARGET_KERNEL_SOURCE := kernel/huawei/h30u10
 TARGET_KERNEL_CONFIG := h30u10_defconfig
-BOARD_KERNEL_CMDLINE :=
+BOARD_KERNEL_CMDLINE := androidboot.hardware=h30u10 androidboot.selinux=permissive
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
@@ -47,10 +47,7 @@ WITH_DEXPREOPT := false
 DISABLE_DEXPREOPT := true
 
 # Block based ota
-BLOCK_BASED_OTA := false
-
-#ANDROID_COMPILE_WITH_JACK := false
-#DEFAULT_JACK_ENABLED=false
+BLOCK_BASED_OTA := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -59,7 +56,10 @@ BOARD_BLUETOOTH_DOES_NOT_USE_RFKILL := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
 
 # OpenGL
-USE_OPENGL_RENDERER:= true
+USE_OPENGL_RENDERER := true
+BOARD_EGL_CFG := device/huawei/h30u10/rootdir/system/etc/egl.cfg
+BOARD_EGL_WORKAROUND_BUG_10194508 := true
+TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 
 # RIL
 SIM_COUNT := 2
@@ -89,6 +89,9 @@ TARGET_OTA_ASSERT_DEVICE := H30-U10,h30u10
 # Malloc
 MALLOC_SVELTE := true
 
+# Fix scaling on older omx
+TARGET_OMX_LEGACY_RESCALING := true
+
 # MTK Hardware
 BOARD_USES_MTK_HARDWARE := true
 BOARD_HAS_MTK_HARDWARE := true
@@ -116,9 +119,8 @@ TARGET_USERIMAGES_USE_EXT4:=true
 
 
 # SELinux
-#BOARD_SEPOLICY_DIRS += \
-#    device/huawei/h30u10/sepolicy
+BOARD_SEPOLICY_DIRS += \
+    device/huawei/h30u10/sepolicy
 
-
-# Hack for build
-$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
+# SECCOMP
+BOARD_SECCOMP_POLICY += device/huawei/h30u10/seccomp

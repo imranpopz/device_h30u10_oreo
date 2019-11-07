@@ -57,10 +57,12 @@ PRODUCT_PACKAGES += \
 
 # Media
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
-    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/configs/media_codecs_performance.xml:system/etc/media_codecs_performance.xml \
-    $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
+    device/huawei/h30u10/rootdir/system/etc/media_profiles.xml:system/etc/media_profiles.xml \
+    device/huawei/h30u10/rootdir/system/etc/media_codecs.xml:system/etc/media_codecs.xml \
+    device/huawei/h30u10/rootdir/system/etc/audio_policy.conf:system/etc/audio_policy.conf \
+    device/huawei/h30u10/rootdir/system/etc/media_codecs_mediatek_audio.xml:system/etc/media_codecs_mediatek_audio.xml \
+    device/huawei/h30u10/rootdir/system/etc/media_codecs_mediatek_video.xml:system/etc/media_codecs_mediatek_video.xml \
+    device/huawei/h30u10/rootdir/system/etc/mtk_omx_core.cfg:system/etc/mtk_omx_core.cfg \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml
@@ -118,10 +120,6 @@ TARGET_BOOTANIMATION_MULTITHREAD_DECODE := true
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl \
     android.hardware.light@2.0-service
-
-# FMRadio
-#PRODUCT_PACKAGES += \
-#	FMRadio
 
 # Display
 PRODUCT_PACKAGES += \
@@ -214,13 +212,12 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-	Camera2 \
-	Snap \
-	camera.device@1.0-impl \
-    	camera.device@3.2-impl \
-	android.hardware.camera.provider@2.4-impl \
-    	android.hardware.camera.provider@2.4-service \
-        libcamera_parameters_mtk
+    camera.device@1.0-impl \
+    camera.device@3.2-impl \
+    android.hardware.camera.provider@2.4-impl \
+    android.hardware.camera.provider@2.4-service \
+    libcamera_parameters_mtk \
+    Snap
 
 
 # Vendor Interface Manifest
@@ -245,20 +242,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES := \
 	ro.dalvik.vm.native.bridge=0 \
 	camera.disable_zsl_mode=1
 
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    pm.dexopt.first-boot=verify-at-runtime \
-    pm.dexopt.boot=verify-at-runtime \
-    pm.dexopt.install=interpret-only \
-    pm.dexopt.bg-dexopt=speed-profile \
-    pm.dexopt.ab-ota=speed-profile \
-    pm.dexopt.nsys-library=speed \
-    pm.dexopt.shared-apk=speed \
-    pm.dexopt.forced-dexopt=speed \
-    pm.dexopt.core-app=speed
-
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.dex2oat-filter=speed \
-    dalvik.vm.dex2oat-swap=false
-
-#USE_CUSTOM_AUDIO_POLICY := 1
-
+    dalvik.vm.dex2oat-swap=false	

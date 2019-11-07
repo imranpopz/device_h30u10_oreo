@@ -5,7 +5,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Call device specific makefile
-$(call inherit-product, device/huawei/h30u10/lineage_h30u10.mk)
+$(call inherit-product, device/huawei/h30u10/device.mk.mk)
 
 LOCAL_PATH := device/huawei/h30u10
 
@@ -22,8 +22,9 @@ PRODUCT_MANUFACTURER := Mediatek
 PRODUCT_MODEL := Huawei H30-U10
 
 # Boot animation
-TARGET_SCREEN_HEIGHT := 800
-TARGET_SCREEN_WIDTH := 480
+TARGET_SCREEN_HEIGHT := 1280
+TARGET_SCREEN_WIDTH := 720
+
 
 # Release name
 PRODUCT_RELEASE_NAME := Huawei H30-U10

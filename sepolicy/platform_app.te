@@ -1,0 +1,2 @@
+allow platform_app init:unix_dgram_socket write;
+allow platform_app fm_device:chr_file { read write ioctl open };
