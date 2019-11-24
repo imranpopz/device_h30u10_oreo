@@ -2,31 +2,27 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-# /system/lib/librilmtk.so ( _ZN7android6Parcel13writeString16EPKtj )
-LOCAL_SRC_FILES := ril.cpp
-LOCAL_SHARED_LIBRARIES := libbinder
+LOCAL_SRC_FILES := \
+	ril.cpp \
+	GraphicBuffer.cpp \
+	icu55.c \
+	bionic.cpp \
+	wvm.cpp \
+	atomic.cpp
 
-# /system/lib/libcam.utils.so ( _ZN7android13GraphicBufferC1Ejjij )
-LOCAL_SRC_FILES := GraphicBuffer.cpp
-LOCAL_SHARED_LIBRARIES := libui libbinder libgui
-LOCAL_C_INCLUDES := frameworks/native/include
 
-# /system/bin/mtk_agpsd ( UCNV_FROM_U_CALLBACK_STOP_55 )
-LOCAL_SRC_FILES += icu55.c
-LOCAL_SHARED_LIBRARIES += libicuuc
-
-# /system/lib/libmtkjpeg.so ( __pthread_gettid )
-LOCAL_SRC_FILES += bionic.cpp
-LOCAL_SHARED_LIBRARIES += libc
-
-# /system/vendor/lib/libwvm.so ( _ZN7android16MediaBufferGroupC1Ev , _ZNK7android11MediaSource11ReadOptions9getSeekToEPxPNS1_8SeekModeE , _ZNK7android11MediaSource11ReadOptions14getNonBlockingEv , _ZN7android16MediaBufferGroup14acquire_bufferEPPNS_11MediaBufferEb
-# LOCAL_SRC_FILES += wvm.cpp
-# LOCAL_SHARED_LIBRARIES += libmedia libstagefright_foundation
-
-# /system/lib/libcam_utils.so ( android_atomic_acquire_load )
-LOCAL_SRC_FILES := atomic.cpp
-LOCAL_SHARED_LIBRARIES := libcutils
+LOCAL_C_INCLUDES += frameworks/av/media/mtp/ system/core/include/ frameworks/rs/server/ frameworks/av/include/ hardware/libhardware/include/
+LOCAL_SHARED_LIBRARIES := libbinder libutils liblog libgui libui \
+				libicuuc libicui18n libcrypto libmedia libstagefright_foundation
 
 LOCAL_MODULE := libshim
 LOCAL_MODULE_TAGS := optional
+LOCAL_CLANG := true
+LOCAL_CPPFLAGS := -std=c++1y
+# LOCAL_SANITIZE := integer
+LOCAL_CPPFLAGS += -Wno-exit-time-destructors
+LOCAL_CPPFLAGS += -Wno-global-constructors
+LOCAL_CPPFLAGS += -Wno-c++98-compat-pedantic
+LOCAL_CPPFLAGS += -Wno-four-char-constants
+LOCAL_CPPFLAGS += -Wno-padded
 include $(BUILD_SHARED_LIBRARY)
