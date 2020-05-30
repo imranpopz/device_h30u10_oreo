@@ -152,7 +152,8 @@ PRODUCT_PACKAGES += \
 # Camera HAL
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl-legacy \
-    libcam.client
+    libcam.client \
+    libcam.utils.sensorlistener
 
 # Vibrator
 PRODUCT_PACKAGES += \
