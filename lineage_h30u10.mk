@@ -153,7 +153,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl-legacy \
     libcam.client \
-    libcam.utils.sensorlistener
+    libcam.utils.sensorlistener \
+    Snap
 
 # Vibrator
 PRODUCT_PACKAGES += \
@@ -222,6 +223,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libshim
 
+PRODUCT_PROPERTY_OVERRIDES += debug.hwui.use_buffer_age=false
+PRODUCT_PROPERTY_OVERRIDES += persist.media.treble_omx=false
+
+# Seccomp
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/seccomp_policy/mediacodec.policy:system/vendor/etc/seccomp_policy/mediacodec.policy
 
 # Vendor Interface Manifest
 PRODUCT_COPY_FILES += \

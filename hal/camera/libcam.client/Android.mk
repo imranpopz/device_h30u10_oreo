@@ -15,7 +15,7 @@ LOCAL_C_INCLUDES := \
     $(TOP)/system/media/camera/include \
     $(TOP)/system/core/include \
     $(TOP)/frameworks/native/libs/nativebase/include \
-    $(TOP)/device/lge/my90ds/hal/graphics/libgralloc_extra/include \
+    device/huawei/h30u10/hal/graphics/libgralloc_extra/include \
     $(TOP)/system/core/libion/include \
     $(TOP)/frameworks/native/libs/nativewindow/include
 
