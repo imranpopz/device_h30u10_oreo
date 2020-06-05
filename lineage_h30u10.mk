@@ -146,8 +146,7 @@ PRODUCT_PACKAGES += \
     android.hardware.renderscript@1.0-impl \
     libgralloc_extra \
     libui_ext \
-    libgui_ext \
-    libm4u
+    libgui_ext
 
 # Camera HAL
 PRODUCT_PACKAGES += \
