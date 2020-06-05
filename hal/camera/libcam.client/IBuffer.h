@@ -42,7 +42,7 @@
 //
 #include <utils/RefBase.h>
 #include <utils/String8.h>
-#include <hardware/camera.h>
+
 /******************************************************************************
  *
  ******************************************************************************/
@@ -109,28 +109,10 @@ public:     ////
     virtual                     ~IImgBuf() {};
 };
 
-class ICameraBuf : public virtual RefBase
-{
-public:     ////                    Attributes.
-    virtual uint_t                  getBufIndex() const                     = 0;
-    virtual camera_memory_t*        get_camera_memory()                     = 0;
 
-public:     ////
-    //
-    virtual                         ~ICameraBuf() {};
-};
-
-class ICameraImgBuf : public IImgBuf, public ICameraBuf
-{
-};
-
-class ICameraMemBuf : public IMemBuf, public ICameraBuf
-{
-};
 /******************************************************************************
  *
  ******************************************************************************/
 };  // namespace MtkCamUtils
 };  // namespace android
 #endif  //_MTK_CAMERA_INC_COMMON_CAMUTILS_IBUFFER_H_
-
