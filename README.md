@@ -21,4 +21,9 @@ This branch is for building LineageOS 15.1 ROMS.
  * Audio
  * MTP
  * Offline charging
+ * Camera(Both Front and Back)
+ * Hotspot
 
+#### Bug ####
+ * Video recording
+ * And more
