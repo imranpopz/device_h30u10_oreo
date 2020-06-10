@@ -7,7 +7,8 @@ LOCAL_SRC_FILES := \
     bionic.cpp \
     xlog.c \
     ui.cpp \
-    icu.c \
+    icu53.c \
+    icu55.c \
     camera.cpp \
     buffer.cpp
 

@@ -5,7 +5,6 @@ ro.hardware=h30u10
 # RIL			  
 rild.libpath=/system/lib/mtk-ril.so
 rild.libargs=-d /dev/ttyC0
-ro.telephony.ril.config=fakeiccid
 
 # MTK, Infinity, 20090720 {
 wifi.interface=wlan0
@@ -89,3 +88,6 @@ ril.radiooff.poweroffMD=0
 # Media
 media.stagefright.legacyencoder=true
 media.stagefright.less-secure=true
+
+# GPS
+ro.mtk_gps_support=1

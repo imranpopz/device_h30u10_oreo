@@ -52,8 +52,12 @@ PRODUCT_COPY_FILES += \
      device/huawei/h30u10/rootdir/system/etc/agps_profiles_conf2.xml:system/etc/agps_profiles_conf2.xml
 
 PRODUCT_PACKAGES += \
+    android.hardware.gnss@1.0-impl \
     gps.mt6582
-#   YGPS #for test
+
+# GPS force mode
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.force.gps.mode=gnss
 
 # Media
 PRODUCT_COPY_FILES += \
