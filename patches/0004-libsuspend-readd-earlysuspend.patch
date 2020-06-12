@@ -1,33 +1,34 @@
-From f9414a640f11077d41db77755119d8e61785b903 Mon Sep 17 00:00:00 2001
-From: danielhk <daniel.p6800@gmail.com>
-Date: Sat, 23 Dec 2017 12:50:50 +0800
-Subject: [PATCH] libsuspend:Add earlysuspend support
+From ce42eb57aaf0ba654a880619b18ba8c48ac6c5a8 Mon Sep 17 00:00:00 2001
+From: Dinolek <18579460+Dinolek@users.noreply.github.com>
+Date: Tue, 11 Feb 2020 19:55:04 +0100
+Subject: [PATCH 4/4] libsuspend: readd earlysuspend
 
-Old kernels require earlysusupend support.
+Change-Id: I7fe34a22b442073a4dfad4ac83f88fa501060210
 ---
- libsuspend/Android.bp                 |   1 +
- libsuspend/autosuspend.c              |  13 ++
- libsuspend/autosuspend_earlysuspend.c | 218 ++++++++++++++++++++++++++++++++++
- 3 files changed, 232 insertions(+)
- create mode 100644 libsuspend/autosuspend_earlysuspend.c
+ libsuspend/Android.bp                   |   1 +
+ libsuspend/autosuspend.c                |  12 +-
+ libsuspend/autosuspend_earlysuspend.cpp | 228 ++++++++++++++++++++++++
+ libsuspend/autosuspend_ops.h            |   1 +
+ 4 files changed, 241 insertions(+), 1 deletion(-)
+ create mode 100644 libsuspend/autosuspend_earlysuspend.cpp
 
 diff --git a/libsuspend/Android.bp b/libsuspend/Android.bp
-index 130800ed8..40e753332 100644
+index b3e36c2bd..f7c631088 100644
 --- a/libsuspend/Android.bp
 +++ b/libsuspend/Android.bp
-@@ -6,6 +6,7 @@ cc_library {
+@@ -9,6 +9,7 @@ cc_library {
  
      srcs: [
          "autosuspend.c",
-+        "autosuspend_earlysuspend.c",
-         "autosuspend_wakeup_count.c",
++        "autosuspend_earlysuspend.cpp",
+         "autosuspend_wakeup_count.cpp",
      ],
      export_include_dirs: ["include"],
 diff --git a/libsuspend/autosuspend.c b/libsuspend/autosuspend.c
-index 96e1c10d0..54730c293 100644
+index b87f59cd6..607025c3c 100644
 --- a/libsuspend/autosuspend.c
 +++ b/libsuspend/autosuspend.c
-@@ -34,6 +34,19 @@ static int autosuspend_init(void)
+@@ -32,12 +32,22 @@ static int autosuspend_init(void) {
          return 0;
      }
  
@@ -36,23 +37,27 @@ index 96e1c10d0..54730c293 100644
 +        goto out;
 +    }
 +
-+/* Remove autosleep so userspace can manager suspend/resume and keep stats */
-+#if 0
-+    autosuspend_ops = autosuspend_autosleep_init();
+     autosuspend_ops = autosuspend_wakeup_count_init();
+-    if (autosuspend_ops == NULL) {
 +    if (autosuspend_ops) {
 +        goto out;
 +    }
-+#endif
 +
-     autosuspend_ops = autosuspend_wakeup_count_init();
-     if (autosuspend_ops) {
-         goto out;
-diff --git a/libsuspend/autosuspend_earlysuspend.c b/libsuspend/autosuspend_earlysuspend.c
++    if (!autosuspend_ops) {
+         ALOGE("failed to initialize autosuspend");
+         return -1;
+     }
+ 
++out:
+     ALOGV("autosuspend initialized");
+     return 0;
+ }
+diff --git a/libsuspend/autosuspend_earlysuspend.cpp b/libsuspend/autosuspend_earlysuspend.cpp
 new file mode 100644
-index 000000000..579de5227
+index 000000000..6615e3f5d
 --- /dev/null
-+++ b/libsuspend/autosuspend_earlysuspend.c
-@@ -0,0 +1,218 @@
++++ b/libsuspend/autosuspend_earlysuspend.cpp
+@@ -0,0 +1,228 @@
 +/*
 + * Copyright (C) 2012 The Android Open Source Project
 + *
@@ -69,17 +74,18 @@ index 000000000..579de5227
 + * limitations under the License.
 + */
 +
++#define LOG_TAG "libsuspend"
++
 +#include <errno.h>
 +#include <fcntl.h>
 +#include <pthread.h>
 +#include <stdbool.h>
 +#include <stddef.h>
 +#include <string.h>
-+#include <sys/types.h>
 +#include <sys/stat.h>
++#include <sys/types.h>
 +#include <unistd.h>
 +
-+#define LOG_TAG "libsuspend"
 +#include <log/log.h>
 +
 +#include "autosuspend_ops.h"
@@ -130,7 +136,7 @@ index 000000000..579de5227
 +{
 +    while (1) {
 +        if (wait_for_fb_sleep()) {
-+            ALOGE("Failed reading wait_for_fb_sleep, exiting earlysuspend thread\n");
++            ALOGE("Failed reading wait_for_fb_sleep, exiting earlysuspend thread");
 +            return NULL;
 +        }
 +        pthread_mutex_lock(&earlysuspend_mutex);
@@ -139,7 +145,7 @@ index 000000000..579de5227
 +        pthread_mutex_unlock(&earlysuspend_mutex);
 +
 +        if (wait_for_fb_wake()) {
-+            ALOGE("Failed reading wait_for_fb_wake, exiting earlysuspend thread\n");
++            ALOGE("Failed reading wait_for_fb_wake, exiting earlysuspend thread");
 +            return NULL;
 +        }
 +        pthread_mutex_lock(&earlysuspend_mutex);
@@ -153,12 +159,12 @@ index 000000000..579de5227
 +    char buf[80];
 +    int ret;
 +
-+    ALOGV("autosuspend_earlysuspend_enable\n");
++    ALOGV("autosuspend_earlysuspend_enable");
 +
 +    ret = write(sPowerStatefd, pwr_state_mem, strlen(pwr_state_mem));
 +    if (ret < 0) {
 +        strerror_r(errno, buf, sizeof(buf));
-+        ALOGE("Error writing to %s: %s\n", EARLYSUSPEND_SYS_POWER_STATE, buf);
++        ALOGE("Error writing to %s: %s", EARLYSUSPEND_SYS_POWER_STATE, buf);
 +        goto err;
 +    }
 +
@@ -170,7 +176,7 @@ index 000000000..579de5227
 +        pthread_mutex_unlock(&earlysuspend_mutex);
 +    }
 +
-+    ALOGV("autosuspend_earlysuspend_enable done\n");
++    ALOGV("autosuspend_earlysuspend_enable done");
 +
 +    return 0;
 +
@@ -183,12 +189,12 @@ index 000000000..579de5227
 +    char buf[80];
 +    int ret;
 +
-+    ALOGV("autosuspend_earlysuspend_disable\n");
++    ALOGV("autosuspend_earlysuspend_disable");
 +
 +    ret = TEMP_FAILURE_RETRY(write(sPowerStatefd, pwr_state_on, strlen(pwr_state_on)));
 +    if (ret < 0) {
 +        strerror_r(errno, buf, sizeof(buf));
-+        ALOGE("Error writing to %s: %s\n", EARLYSUSPEND_SYS_POWER_STATE, buf);
++        ALOGE("Error writing to %s: %s", EARLYSUSPEND_SYS_POWER_STATE, buf);
 +        goto err;
 +    }
 +
@@ -200,7 +206,7 @@ index 000000000..579de5227
 +        pthread_mutex_unlock(&earlysuspend_mutex);
 +    }
 +
-+    ALOGV("autosuspend_earlysuspend_disable done\n");
++    ALOGV("autosuspend_earlysuspend_disable done");
 +
 +    return 0;
 +
@@ -208,9 +214,18 @@ index 000000000..579de5227
 +    return ret;
 +}
 +
++static int force_suspend(int timeout_ms) {
++    ALOGV("force_suspend called with timeout: %d", timeout_ms);
++    return 0;
++}
++
++static void autosuspend_set_wakeup_callback(__attribute__ ((unused)) void (*func)(bool success)) {}
++
 +struct autosuspend_ops autosuspend_earlysuspend_ops = {
 +        .enable = autosuspend_earlysuspend_enable,
 +        .disable = autosuspend_earlysuspend_disable,
++        .force_suspend = force_suspend,
++        .set_wakeup_callback = autosuspend_set_wakeup_callback,
 +};
 +
 +void start_earlysuspend_thread(void)
@@ -230,11 +245,11 @@ index 000000000..579de5227
 +
 +    wait_for_fb_wake();
 +
-+    ALOGI("Starting early suspend unblocker thread\n");
++    ALOGI("Starting early suspend unblocker thread");
 +    ret = pthread_create(&earlysuspend_thread, NULL, earlysuspend_thread_func, NULL);
 +    if (ret) {
 +        strerror_r(errno, buf, sizeof(buf));
-+        ALOGE("Error creating thread: %s\n", buf);
++        ALOGE("Error creating thread: %s", buf);
 +        return;
 +    }
 +
@@ -250,18 +265,18 @@ index 000000000..579de5227
 +
 +    if (sPowerStatefd < 0) {
 +        strerror_r(errno, buf, sizeof(buf));
-+        ALOGW("Error opening %s: %s\n", EARLYSUSPEND_SYS_POWER_STATE, buf);
++        ALOGW("Error opening %s: %s", EARLYSUSPEND_SYS_POWER_STATE, buf);
 +        return NULL;
 +    }
 +
 +    ret = TEMP_FAILURE_RETRY(write(sPowerStatefd, "on", 2));
 +    if (ret < 0) {
 +        strerror_r(errno, buf, sizeof(buf));
-+        ALOGW("Error writing 'on' to %s: %s\n", EARLYSUSPEND_SYS_POWER_STATE, buf);
++        ALOGW("Error writing 'on' to %s: %s", EARLYSUSPEND_SYS_POWER_STATE, buf);
 +        goto err_write;
 +    }
 +
-+    ALOGI("Selected early suspend\n");
++    ALOGI("Selected early suspend");
 +
 +    start_earlysuspend_thread();
 +
@@ -271,4 +286,18 @@ index 000000000..579de5227
 +    close(sPowerStatefd);
 +    return NULL;
 +}
-+
+diff --git a/libsuspend/autosuspend_ops.h b/libsuspend/autosuspend_ops.h
+index b0024c8bb..a21f20792 100644
+--- a/libsuspend/autosuspend_ops.h
++++ b/libsuspend/autosuspend_ops.h
+@@ -25,6 +25,7 @@ struct autosuspend_ops {
+ };
+ 
+ __BEGIN_DECLS
++struct autosuspend_ops *autosuspend_earlysuspend_init(void);
+ struct autosuspend_ops *autosuspend_wakeup_count_init(void);
+ __END_DECLS
+ 
+-- 
+2.20.1
+

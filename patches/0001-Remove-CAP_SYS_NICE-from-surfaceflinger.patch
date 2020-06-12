@@ -1,27 +1,28 @@
-From 4bbfc568da01612dd5b6ef09e2c74d8de661bf5a Mon Sep 17 00:00:00 2001
-From: xcore995 <arman.p95@gmail.com>
-Date: Wed, 4 Jul 2018 10:08:52 +0000
-Subject: [PATCH] Remove CAP_SYS_NICE from surfaceflinger
+From 8ccb414da35b72659d9148e1550cf567aeb202d0 Mon Sep 17 00:00:00 2001
+From: imranpopz <imranpopz32@gmail.com>
+Date: Fri, 12 Jun 2020 08:21:03 +0530
+Subject: [PATCH 1/1] 0001-Remove-CAP_SYS_NICE-from-surfaceflinger.patch
 
-Change-Id: Idf048bdb1828100681b45144d537b5ff870838ef
+Change-Id: I4870b639b09e342b9c3a5904c7227de237bbeefc
+Signed-off-by: imranpopz <imranpopz32@gmail.com>
 ---
  libcutils/fs_config.cpp | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/libcutils/fs_config.cpp b/libcutils/fs_config.cpp
-index cb15b57..26039e8 100644
+index f9fddb6d6..709a92c11 100644
 --- a/libcutils/fs_config.cpp
 +++ b/libcutils/fs_config.cpp
-@@ -182,8 +182,7 @@ static const struct fs_path_config android_files[] = {
+@@ -191,8 +191,7 @@ static const struct fs_path_config android_files[] = {
                                                "system/bin/run-as" },
  
      // Support FIFO scheduling mode in SurfaceFlinger.
 -    { 00755, AID_SYSTEM,    AID_GRAPHICS,  CAP_MASK_LONG(CAP_SYS_NICE),
 -                                              "system/bin/surfaceflinger" },
 +    //{ 00755, AID_SYSTEM,    AID_GRAPHICS,  CAP_MASK_LONG(CAP_SYS_NICE), "system/bin/surfaceflinger" },
- 
-     // Support hostapd administering a network interface.
-     { 00755, AID_WIFI,      AID_WIFI,      CAP_MASK_LONG(CAP_NET_ADMIN) |
+     // generic defaults
+     { 00755, AID_ROOT,      AID_ROOT,      0, "bin/*" },
+     { 00640, AID_ROOT,      AID_SHELL,     0, "fstab.*" },
 -- 
-2.7.4
+2.20.1
 
