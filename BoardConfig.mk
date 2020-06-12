@@ -121,5 +121,3 @@ TARGET_USERIMAGES_USE_EXT4 := true
 #    device/huawei/h30u10/sepolicy
 
 
-# Hack for build
-$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
