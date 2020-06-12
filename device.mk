@@ -223,6 +223,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PROPERTY_OVERRIDES += debug.hwui.use_buffer_age=false
 PRODUCT_PROPERTY_OVERRIDES += persist.media.treble_omx=false
+PRODUCT_PROPERTY_OVERRIDES += ro.boot.btmacaddr=00:00:00:00:00:00
 
 # Seccomp
 PRODUCT_COPY_FILES += \
