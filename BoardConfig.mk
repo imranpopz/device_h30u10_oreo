@@ -82,6 +82,8 @@ WIFI_DRIVER_STATE_CTRL_PARAM := /dev/wmtWifi
 WIFI_DRIVER_STATE_ON := 1
 WIFI_DRIVER_STATE_OFF := 0
 
+TARGET_HAS_NO_WLAN_STATS := true
+
 # NINJA is enabled for fasted building
 # Set 'false' to disable use NINJA
 USE_NINJA := true
