@@ -6,6 +6,9 @@ patch -p1 < ../../device/huawei/h30u10/patches/0004-libsuspend-readd-earlysuspen
 patch -p1 < ../../device/huawei/h30u10/patches/0004-libnetutils-add-MTK-bits-ifc_ccmni_md_cfg.patch
 patch -p1 < ../../device/huawei/h30u10/patches/0001-liblog-Add-__xlog_buf_printf.patch
 cd ../..
+cd hardware/libhardware
+patch -p1 < ../device/huawei/h30u10/patches/0001-Move-get_microphones-to-bottom-cuz-our-audio-doesn-t.patch
+cd ../..
 cd bionic
 patch -p1 < ../device/huawei/h30u10/patches/0002-Apply-LIBC-version-to-__pthread_gettid.patch
 cd ..
