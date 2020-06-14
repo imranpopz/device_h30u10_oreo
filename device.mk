@@ -173,7 +173,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     librs_jni \
     com.android.future.usb.accessory \
-    android.hardware.usb@1.0-service
+    android.hardware.usb@1.0-service.basic
 
 # Sensors
 PRODUCT_PACKAGES += \
